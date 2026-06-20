@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LaporanAdmin" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+    <queryString>
+        <![CDATA[SELECT p.id_pinjam, u.nama, b.judul, p.tanggal_pinjam, p.tanggal_kembali, p.status_pinjam FROM peminjaman p JOIN user u ON p.id_user_anggota = u.id_user JOIN buku b ON p.id_buku = b.id_buku ORDER BY p.tanggal_pinjam DESC]]>
+    </queryString>
+    <field name="id_pinjam" class="java.lang.String"/>
+    <field name="nama" class="java.lang.String"/>
+    <field name="judul" class="java.lang.String"/>
+    <field name="tanggal_pinjam" class="java.sql.Date"/>
+    <field name="tanggal_kembali" class="java.sql.Date"/>
+    <field name="status_pinjam" class="java.lang.String"/>
+    <title>
+        <band height="50">
+            <staticText>
+                <reportElement x="0" y="10" width="555" height="30"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"><font size="16" isBold="true"/></textElement>
+                <text><![CDATA[LAPORAN SELURUH TRANSAKSI PEMINJAMAN]]></text>
+            </staticText>
+        </band>
+    </title>
+    <columnHeader>
+        <band height="20">
+            <staticText><reportElement x="0" y="0" width="60" height="20"/><box><pen lineWidth="0.5"/></box><textElement textAlignment="Center" verticalAlignment="Middle"><font isBold="true"/></textElement><text><![CDATA[ID Pinjam]]></text></staticText>
+            <staticText><reportElement x="60" y="0" width="120" height="20"/><box><pen lineWidth="0.5"/></box><textElement textAlignment="Center" verticalAlignment="Middle"><font isBold="true"/></textElement><text><![CDATA[Nama Peminjam]]></text></staticText>
+            <staticText><reportElement x="180" y="0" width="175" height="20"/><box><pen lineWidth="0.5"/></box><textElement textAlignment="Center" verticalAlignment="Middle"><font isBold="true"/></textElement><text><![CDATA[Judul Buku]]></text></staticText>
+            <staticText><reportElement x="355" y="0" width="70" height="20"/><box><pen lineWidth="0.5"/></box><textElement textAlignment="Center" verticalAlignment="Middle"><font isBold="true"/></textElement><text><![CDATA[Tgl Pinjam]]></text></staticText>
+            <staticText><reportElement x="425" y="0" width="70" height="20"/><box><pen lineWidth="0.5"/></box><textElement textAlignment="Center" verticalAlignment="Middle"><font isBold="true"/></textElement><text><![CDATA[Tgl Kembali]]></text></staticText>
+            <staticText><reportElement x="495" y="0" width="60" height="20"/><box><pen lineWidth="0.5"/></box><textElement textAlignment="Center" verticalAlignment="Middle"><font isBold="true"/></textElement><text><![CDATA[Status]]></text></staticText>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="20">
+            <textField><reportElement x="0" y="0" width="60" height="20"/><box><pen lineWidth="0.5"/></box><textElement textAlignment="Center" verticalAlignment="Middle"/><textFieldExpression><![CDATA[$F{id_pinjam}]]></textFieldExpression></textField>
+            
+            <textField><reportElement x="60" y="0" width="120" height="20"/><box leftPadding="4"><pen lineWidth="0.5"/></box><textElement verticalAlignment="Middle"/><textFieldExpression><![CDATA[$F{nama}]]></textFieldExpression></textField>
+            <textField><reportElement x="180" y="0" width="175" height="20"/><box leftPadding="4"><pen lineWidth="0.5"/></box><textElement verticalAlignment="Middle"/><textFieldExpression><![CDATA[$F{judul}]]></textFieldExpression></textField>
+            
+            <textField pattern="dd/MM/yyyy"><reportElement x="355" y="0" width="70" height="20"/><box><pen lineWidth="0.5"/></box><textElement textAlignment="Center" verticalAlignment="Middle"/><textFieldExpression><![CDATA[$F{tanggal_pinjam}]]></textFieldExpression></textField>
+            <textField pattern="dd/MM/yyyy"><reportElement x="425" y="0" width="70" height="20"/><box><pen lineWidth="0.5"/></box><textElement textAlignment="Center" verticalAlignment="Middle"/><textFieldExpression><![CDATA[$F{tanggal_kembali}]]></textFieldExpression></textField>
+            <textField><reportElement x="495" y="0" width="60" height="20"/><box><pen lineWidth="0.5"/></box><textElement textAlignment="Center" verticalAlignment="Middle"/><textFieldExpression><![CDATA[$F{status_pinjam}]]></textFieldExpression></textField>
+        </band>
+    </detail>
+</jasperReport>

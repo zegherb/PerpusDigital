@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StrukPeminjaman" pageWidth="380" pageHeight="350" columnWidth="340" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+    <parameter name="id_pinjam_param" class="java.lang.String"/>
+    <queryString>
+        <![CDATA[SELECT p.id_pinjam, u.nama, b.judul, b.penulis, p.tanggal_pinjam, p.tanggal_kembali FROM peminjaman p JOIN user u ON p.id_user_anggota=u.id_user JOIN buku b ON p.id_buku=b.id_buku WHERE p.id_pinjam = $P{id_pinjam_param}]]>
+    </queryString>
+    <field name="id_pinjam" class="java.lang.String"/>
+    <field name="nama" class="java.lang.String"/>
+    <field name="judul" class="java.lang.String"/>
+    <field name="penulis" class="java.lang.String"/>
+    <field name="tanggal_pinjam" class="java.sql.Date"/>
+    <field name="tanggal_kembali" class="java.sql.Date"/>
+    <title>
+        <band height="45">
+            <staticText>
+                <reportElement x="0" y="0" width="340" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"><font size="14" isBold="true"/></textElement>
+                <text><![CDATA[BUKTI PEMINJAMAN BUKU DIGITAL]]></text>
+            </staticText>
+            <line><reportElement x="0" y="35" width="340" height="1"/></line>
+        </band>
+    </title>
+    <detail>
+        <band height="140">
+            <staticText>
+                <reportElement x="10" y="5" width="100" height="20"/>
+                <textElement><font isBold="true"/></textElement>
+                <text><![CDATA[Kode Transaksi :]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="110" y="5" width="220" height="20"/>
+                <textFieldExpression><![CDATA[$F{id_pinjam}]]></textFieldExpression>
+            </textField>
+            
+            <staticText>
+                <reportElement x="10" y="30" width="100" height="20"/>
+                <textElement><font isBold="true"/></textElement>
+                <text><![CDATA[Peminjam         :]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="110" y="30" width="220" height="20"/>
+                <textFieldExpression><![CDATA[$F{nama}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="10" y="55" width="100" height="20"/>
+                <textElement><font isBold="true"/></textElement>
+                <text><![CDATA[Judul Buku       :]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="110" y="55" width="220" height="20"/>
+                <textFieldExpression><![CDATA[$F{judul} + " (" + $F{penulis} + ")"]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="10" y="80" width="100" height="20"/>
+                <textElement><font isBold="true"/></textElement>
+                <text><![CDATA[Tgl Pinjam        :]]></text>
+            </staticText>
+            <textField pattern="dd/MM/yyyy">
+                <reportElement x="110" y="80" width="220" height="20"/>
+                <textFieldExpression><![CDATA[$F{tanggal_pinjam}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="10" y="105" width="100" height="20"/>
+                <textElement><font isBold="true"/></textElement>
+                <text><![CDATA[Wajib Kembali  :]]></text>
+            </staticText>
+            <textField pattern="dd/MM/yyyy">
+                <reportElement x="110" y="105" width="220" height="20"/>
+                <textFieldExpression><![CDATA[$F{tanggal_kembali}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <summary>
+        <band height="35">
+            <line><reportElement x="0" y="5" width="340" height="1"/></line>
+            <staticText>
+                <reportElement x="0" y="10" width="340" height="15"/>
+                <textElement textAlignment="Center"><font size="8" isItalic="true"/></textElement>
+                <text><![CDATA[Simpan bukti ini sebagai tanda sirkulasi yang sah.]]></text>
+            </staticText>
+        </band>
+    </summary>
+</jasperReport>
