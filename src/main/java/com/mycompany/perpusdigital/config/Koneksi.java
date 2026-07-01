@@ -16,14 +16,14 @@ public class Koneksi {
     public static Connection configDB() {
         try {
             
-            String url = "jdbc:mysql://localhost:3306/perpustakaan_db?serverTimezone=Asia/Makassar"; 
-            String user = "root"; 
-            String pass = ""; 
+            // String url = "jdbc:mysql://localhost:3306/perpustakaan_db?serverTimezone=Asia/Makassar"; 
+            // String user = "root"; 
+            // String pass = ""; 
 
 
-            // String url = "jdbc:mysql://ui7pyx3cjuxf8cfm:h43GgpMfuPDJWLYut4xQ@bc9q9qfrymvvc7ewlani-mysql.services.clever-cloud.com:3306/bc9q9qfrymvvc7ewlani"; 
-            // String user = "ui7pyx3cjuxf8cfm"; 
-            // String pass = "h43GgpMfuPDJWLYut4xQ"; 
+            String url = "jdbc:mysql://ui7pyx3cjuxf8cfm:h43GgpMfuPDJWLYut4xQ@bc9q9qfrymvvc7ewlani-mysql.services.clever-cloud.com:3306/bc9q9qfrymvvc7ewlani"; 
+            String user = "ui7pyx3cjuxf8cfm"; 
+            String pass = "h43GgpMfuPDJWLYut4xQ"; 
 
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             
