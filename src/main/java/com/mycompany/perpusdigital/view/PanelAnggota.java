@@ -81,7 +81,7 @@ public class PanelAnggota extends JPanel {
                         JOptionPane.showMessageDialog(this, "SELAMAT! '" + nama + "' resmi menjadi Admin (" + jabatanBersih + ").");
                         loadDataAnggota(); 
                     } else {
-                        JOptionPane.showMessageDialog(this, "Gagal melakukan promosi jabatan!", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Gagal melakukan promosi jabatan, anggota ini masih punya riwayat peminjaman!", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
@@ -101,7 +101,13 @@ public class PanelAnggota extends JPanel {
         String nama = tableModel.getValueAt(baris, 2).toString();
 
         if (JOptionPane.showConfirmDialog(this, "Hapus anggota '" + nama + "'?", "Hapus", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            if (anggotaDAO.hapusAnggota(idUser)) loadDataAnggota();
+            if (anggotaDAO.hapusAnggota(idUser)){
+                JOptionPane.showMessageDialog(this, "Anggota '" + nama + "' berhasil dihapus.");
+                loadDataAnggota();
+            }else {
+                JOptionPane.showMessageDialog(this, "Gagal menghapus, anggota ini masih punya riwayat peminjaman.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+                
         }
     }
 

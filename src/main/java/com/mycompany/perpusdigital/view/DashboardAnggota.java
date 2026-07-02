@@ -111,9 +111,12 @@ public class DashboardAnggota extends JFrame {
         JPanel searchBox = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JTextField txtCari = new JTextField(18);
         JButton btnCari = new JButton("Cari");
+        JButton btnRefreshKatalog = new JButton("Refresh");
+
         searchBox.add(new JLabel("Filter: "));
         searchBox.add(txtCari);
         searchBox.add(btnCari);
+        searchBox.add(btnRefreshKatalog);
 
         northPanel.add(judul, BorderLayout.WEST);
         northPanel.add(searchBox, BorderLayout.EAST);
@@ -143,6 +146,11 @@ public class DashboardAnggota extends JFrame {
             }
         });
         txtCari.addActionListener(btnCari.getActionListeners()[0]);
+
+        btnRefreshKatalog.addActionListener(e -> {
+            txtCari.setText("");
+            btnCari.doClick();
+        });
 
         btnPinjam.addActionListener(e -> {
             int row = tabelKatalog.getSelectedRow();
@@ -195,8 +203,10 @@ public class DashboardAnggota extends JFrame {
         info.setFont(new Font("Segoe UI", Font.ITALIC, 11));
 
         JPanel panelTombolKanan = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        
-        
+
+        JButton btnRefreshRak = new JButton("Refresh");
+        btnRefreshRak.addActionListener(e -> muatUlangRakSaya());
+        panelTombolKanan.add(btnRefreshRak);
 
         JButton btnCetakStruk = new JButton("Cetak Bukti Pinjam (PDF)");
         btnCetakStruk.setBackground(new Color(42, 157, 143)); 
