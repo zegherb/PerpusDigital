@@ -9,7 +9,6 @@ import com.mycompany.perpusdigital.config.Koneksi;
 
 public class LoginForm extends javax.swing.JFrame {
 
-    // Deklarasi Komponen Global
     private javax.swing.JLabel Username;
     private javax.swing.JLabel Password;
     private javax.swing.JTextField txtUsername;
@@ -18,12 +17,10 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnSignUp;
 
-    // Constructor
     public LoginForm() {
         initComponents();
     }
 
-    // Method Layout Responsif
     private void initComponents() {
         Username = new javax.swing.JLabel("Username: ");
         Password = new javax.swing.JLabel("Password: ");
@@ -38,14 +35,12 @@ public class LoginForm extends javax.swing.JFrame {
         setTitle("Aplikasi Perpustakaan Digital");
         jLabel3.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18));
 
-        // Event Listener untuk tombol
         btnLogin.addActionListener(evt -> btnLoginActionPerformed(evt));
         btnSignUp.addActionListener(evt -> {
             new SignUpForm().setVisible(true);
             this.dispose();
         });
 
-        // Setup Panel dan GridBagLayout
         javax.swing.JPanel loginPanel = new javax.swing.JPanel();
         loginPanel.setLayout(new java.awt.GridBagLayout());
         java.awt.GridBagConstraints gbc = new java.awt.GridBagConstraints();
@@ -63,7 +58,6 @@ public class LoginForm extends javax.swing.JFrame {
         gbc.gridx = 0; gbc.gridy = 2; loginPanel.add(Password, gbc);
         gbc.gridx = 1; gbc.gridy = 2; loginPanel.add(txtPassword, gbc);
 
-        // Sub-panel untuk mensejajarkan tombol Login dan SignUp
         javax.swing.JPanel buttonPanel = new javax.swing.JPanel();
         buttonPanel.add(btnLogin);
         buttonPanel.add(btnSignUp);
@@ -76,10 +70,9 @@ public class LoginForm extends javax.swing.JFrame {
         getContentPane().add(loginPanel);
 
         pack();
-        setLocationRelativeTo(null); // Memastikan tampil di tengah layar
+        setLocationRelativeTo(null); 
     }
 
-    // Logika Autentikasi Login
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             Connection conn = Koneksi.configDB();
@@ -95,22 +88,20 @@ public class LoginForm extends javax.swing.JFrame {
                 String tipe = rs.getString("tipe_user");
                 
                 if ("Admin".equals(tipe)) {
-                    // Ambil nama dari database buat dikirim ke dashboard
+                    
                     String namaLengkap = rs.getString("nama"); 
                     JOptionPane.showMessageDialog(this, "Login Berhasil sebagai Admin!");
     
-                    // Buka Dashboard Admin dan kirim variabel nama
+                   
                     new DashboardAdmin(namaLengkap).setVisible(true); 
-                    this.dispose(); // Tutup form login
+                    this.dispose(); 
                     
                 } else if ("Anggota".equals(tipe)) {
-                    // 1. Tangkap data dari tabel user
                     String id = rs.getString("id_user");
                     String nama = rs.getString("nama");
                     String user = rs.getString("username");
                     String pass = rs.getString("password");
 
-                    // 2. Kita harus kueri JOIN sedikit ke tabel anggota buat ngambil 'no_anggota'
                     String sqlAnggota = "SELECT no_anggota, alamat, no_telepon FROM anggota WHERE id_user = ?";
                     PreparedStatement psAnggota = conn.prepareStatement(sqlAnggota);
                     psAnggota.setString(1, id);
@@ -123,13 +114,11 @@ public class LoginForm extends javax.swing.JFrame {
                         telp = rsAng.getString("no_telepon");
                     }
 
-                    // 3. Wujudkan objek Anggota!
                     com.mycompany.perpusdigital.model.Anggota anggotaLogin = 
                         new com.mycompany.perpusdigital.model.Anggota(id, nama, user, pass, tipe, noAng, alamat, telp);
 
                     JOptionPane.showMessageDialog(this, "Selamat Datang, " + nama + "!");
 
-                    // 4. LEMPAR KE DASHBOARD KHUSUS ANGGOTA
                     new DashboardAnggota(anggotaLogin).setVisible(true);
                     this.dispose();
                 }
@@ -142,7 +131,6 @@ public class LoginForm extends javax.swing.JFrame {
         }
     }
 
-    // Main Method untuk testing run form langsung
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
             new LoginForm().setVisible(true);

@@ -12,7 +12,7 @@ public class Anggota extends User {
         this.noTelepon = noTelepon;
     }
 
-    // --- GETTER KHUSUS ANGGOTA ---
+
     public String getNoAnggota() { return noAnggota; }
     public String getAlamat() { return alamat; }
     public String getNoTelepon() { return noTelepon; }

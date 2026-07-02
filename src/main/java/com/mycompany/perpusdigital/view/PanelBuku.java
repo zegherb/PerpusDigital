@@ -20,7 +20,7 @@ public class PanelBuku extends JPanel {
         setLayout(new BorderLayout(10, 10));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // 1. BAGIAN ATAS: Form Input (GridBagLayout)
+        
         JPanel formPanel = new JPanel(new GridBagLayout());
         formPanel.setBorder(BorderFactory.createTitledBorder("Form Input / Edit Buku"));
         GridBagConstraints gbc = new GridBagConstraints();
@@ -41,7 +41,7 @@ public class PanelBuku extends JPanel {
         addFormField(formPanel, gbc, "Tahun Terbit:", txtTahun, 4);
         addFormField(formPanel, gbc, "Status:", cmbStatus, 5);
 
-        // 2. BAGIAN TENGAH: Deretan Tombol Aksi
+        
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton btnTambah = new JButton("Tambah");
         JButton btnUbah = new JButton("Ubah");
@@ -53,24 +53,21 @@ public class PanelBuku extends JPanel {
         buttonPanel.add(btnHapus);
         buttonPanel.add(btnReset);
 
-        // Gabung Form dan Tombol ke panel utara
+        
         JPanel northPanel = new JPanel(new BorderLayout());
         northPanel.add(formPanel, BorderLayout.CENTER);
         northPanel.add(buttonPanel, BorderLayout.SOUTH);
         add(northPanel, BorderLayout.NORTH);
 
-        // 3. BAGIAN BAWAH: Tabel Data
+        
         String[] kolom = {"ID Buku", "Judul", "Penulis", "Kategori", "Tahun", "Status"};
         tableModel = new DefaultTableModel(kolom, 0) {
             @Override
-            public boolean isCellEditable(int row, int column) { return false; } // Kunci sel tabel biar gak bisa diedit langsung
+            public boolean isCellEditable(int row, int column) { return false; } 
         };
         tabelBuku = new JTable(tableModel);
         add(new JScrollPane(tabelBuku), BorderLayout.CENTER);
 
-        // --- EVENT LISTENERS ---
-        
-        // Event Klik Baris Tabel -> Masukkan data ke Form
         tabelBuku.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = tabelBuku.getSelectedRow();
@@ -81,12 +78,11 @@ public class PanelBuku extends JPanel {
                     txtKategori.setText(tableModel.getValueAt(row, 3).toString());
                     txtTahun.setText(tableModel.getValueAt(row, 4).toString());
                     cmbStatus.setSelectedItem(tableModel.getValueAt(row, 5).toString());
-                    txtIdBuku.setEditable(false); // Kunci ID pas mode edit
+                    txtIdBuku.setEditable(false); 
                 }
             }
         });
 
-        // Tombol Tambah
         btnTambah.addActionListener(e -> {
             if (validateInput()) {
                 Buku bukuBaru = getBukuFromForm();
@@ -100,7 +96,6 @@ public class PanelBuku extends JPanel {
             }
         });
 
-        // Tombol Ubah
         btnUbah.addActionListener(e -> {
             if (txtIdBuku.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Pilih buku dari tabel dulu yang mau diubah!");
@@ -115,7 +110,6 @@ public class PanelBuku extends JPanel {
             }
         });
 
-        // Tombol Hapus
         btnHapus.addActionListener(e -> {
             String id = txtIdBuku.getText();
             if (id.isEmpty()) {
@@ -132,22 +126,18 @@ public class PanelBuku extends JPanel {
             }
         });
 
-        // Tombol Reset
         btnReset.addActionListener(e -> resetForm());
 
-        // Muat data saat panel pertama kali dirender
         loadDataBuku();
     }
 
-    // Method pembantu pasang field ke GridBag
     private void addFormField(JPanel panel, GridBagConstraints gbc, String label, JComponent field, int y) {
         gbc.gridx = 0; gbc.gridy = y; gbc.weightx = 0; panel.add(new JLabel(label), gbc);
         gbc.gridx = 1; gbc.gridy = y; gbc.weightx = 1; panel.add(field, gbc);
     }
 
-    // Ambil semua objek dari MySQL lalu tembak ke JTable
     private void loadDataBuku() {
-        tableModel.setRowCount(0); // Kosongkan tabel
+        tableModel.setRowCount(0); 
         List<Buku> list = bukuDAO.getSemuaBuku();
         for (Buku b : list) {
             tableModel.addRow(new Object[]{

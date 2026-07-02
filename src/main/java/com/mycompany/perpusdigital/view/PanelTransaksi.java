@@ -30,7 +30,6 @@ public class PanelTransaksi extends JPanel {
         setLayout(new BorderLayout(10, 10));
         setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // 1. BAGIAN ATAS: Form Input Transaksi
         JPanel formPanel = new JPanel(new GridBagLayout());
         formPanel.setBorder(BorderFactory.createTitledBorder("Catat Peminjaman Baru (Maks 7 Hari)"));
         GridBagConstraints gbc = new GridBagConstraints();
@@ -55,7 +54,6 @@ public class PanelTransaksi extends JPanel {
 
         add(formPanel, BorderLayout.NORTH);
 
-        // 2. BAGIAN TENGAH: Tabel Riwayat
         String[] kolom = {"ID Pinjam", "Peminjam", "ID Buku", "Judul Buku", "Tgl Pinjam", "Jatuh Tempo", "Status"};
         tableModel = new DefaultTableModel(kolom, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }
@@ -64,7 +62,6 @@ public class PanelTransaksi extends JPanel {
         tabelTransaksi.setRowHeight(25);
         add(new JScrollPane(tabelTransaksi), BorderLayout.CENTER);
 
-        // 3. BAGIAN BAWAH: Tombol Aksi Pengembalian
         JPanel panelTombol = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton btnKembali = new JButton("Konfirmasi Buku Dikembalikan");
         JButton btnRefresh = new JButton("Refresh Data");
@@ -74,7 +71,7 @@ public class PanelTransaksi extends JPanel {
         btnKembali.setForeground(Color.WHITE);
         btnKembali.setFont(new Font("Segoe UI", Font.BOLD, 12));
         btnCetakLaporan.setBackground(new Color(67, 97, 238));
-        btnCetakLaporan.setForeground(Color.WHITE); // Teksnya jadi putih
+        btnCetakLaporan.setForeground(Color.WHITE); 
         btnCetakLaporan.setFont(new Font("Segoe UI", Font.BOLD, 12));
         
 
@@ -83,16 +80,12 @@ public class PanelTransaksi extends JPanel {
         panelTombol.add(btnCetakLaporan);
         add(panelTombol, BorderLayout.SOUTH);
 
-        // --- EVENT LISTENERS ---
-
-        // Tombol Proses Pinjam
         btnPinjam.addActionListener(e -> {
             if (cmbAnggota.getItemCount() == 0 || cmbBuku.getItemCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Data Anggota atau Buku Tersedia masih kosong!");
                 return;
             }
 
-            // Trik membelah string dropdown "ID - Nama" untuk mengambil ID-nya saja
             String idAnggota = cmbAnggota.getSelectedItem().toString().split(" - ")[0];
             String idBuku = cmbBuku.getSelectedItem().toString().split(" - ")[0];
 
@@ -104,7 +97,6 @@ public class PanelTransaksi extends JPanel {
             }
         });
 
-        // Tombol Buku Dikembalikan
         btnKembali.addActionListener(e -> {
             int baris = tabelTransaksi.getSelectedRow();
             if (baris < 0) {
@@ -139,15 +131,12 @@ public class PanelTransaksi extends JPanel {
         refreshSemuaUI();
     }
 
-    // Method untuk menyegarkan Dropdown dan Tabel sekaligus
     private void refreshSemuaUI() {
-        // 1. Refresh Dropdown Anggota
         cmbAnggota.removeAllItems();
         for (Anggota a : anggotaDAO.getSemuaAnggota()) {
             cmbAnggota.addItem(a.getIdUser() + " - " + a.getNama());
         }
 
-        // 2. Refresh Dropdown Buku (HANYA AMBIL YANG STATUSNYA 'Tersedia')
         cmbBuku.removeAllItems();
         for (Buku b : bukuDAO.getSemuaBuku()) {
             if ("Tersedia".equals(b.getStatus())) {
@@ -155,7 +144,6 @@ public class PanelTransaksi extends JPanel {
             }
         }
 
-        // 3. Refresh Tabel Riwayat
         tableModel.setRowCount(0);
         for (Peminjaman p : peminjamanDAO.getSemuaPeminjaman()) {
             tableModel.addRow(new Object[]{

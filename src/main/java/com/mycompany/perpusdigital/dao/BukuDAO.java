@@ -8,7 +8,6 @@ import com.mycompany.perpusdigital.model.Buku;
 
 public class BukuDAO {
 
-    // 1. READ: Ambil semua data buku dari MySQL
     public List<Buku> getSemuaBuku() {
         List<Buku> listBuku = new ArrayList<>();
         String sql = "SELECT * FROM buku";
@@ -33,7 +32,6 @@ public class BukuDAO {
         return listBuku;
     }
 
-    // 2. CREATE: Tambah buku baru
     public boolean tambahBuku(Buku b) {
         String sql = "INSERT INTO buku (id_buku, judul, penulis, kategori, tahun_terbit, status) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = Koneksi.configDB();
@@ -53,7 +51,6 @@ public class BukuDAO {
         }
     }
 
-    // 3. UPDATE: Perbarui data buku
     public boolean ubahBuku(Buku b) {
         String sql = "UPDATE buku SET judul=?, penulis=?, kategori=?, tahun_terbit=?, status=? WHERE id_buku=?";
         try (Connection conn = Koneksi.configDB();
@@ -73,7 +70,6 @@ public class BukuDAO {
         }
     }
 
-    // 4. DELETE: Hapus buku berdasarkan ID
     public boolean hapusBuku(String idBuku) {
         String sql = "DELETE FROM buku WHERE id_buku=?";
         try (Connection conn = Koneksi.configDB();

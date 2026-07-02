@@ -11,21 +11,17 @@ import com.mycompany.perpusdigital.config.Koneksi;
 
 public class ReportService {
 
-    // 1. Eksekutor Laporan Semua Transaksi (Admin)
     public void cetakLaporanAdmin() {
         try (Connection conn = Koneksi.configDB()) {
-            // Membaca file jrxml yang ada di folder resources tadi
             InputStream reportStream = getClass().getResourceAsStream("/report/laporan_admin.jrxml");
             if (reportStream == null) {
                 JOptionPane.showMessageDialog(null, "Template laporan_admin.jrxml tidak ditemukan!");
                 return;
             }
 
-            // Proses Kompilasi on-the-fly dari XML -> PDF
             JasperReport jr = JasperCompileManager.compileReport(reportStream);
             JasperPrint jp = JasperFillManager.fillReport(jr, null, conn);
-            
-            // Memunculkan Jendela Preview PDF (false = agar saat PDF diclose, aplikasi utama gak mati)
+
             JasperViewer.viewReport(jp, false);
 
         } catch (Exception e) {
@@ -34,7 +30,6 @@ public class ReportService {
         }
     }
 
-    // 2. Eksekutor Cetak Struk per Transaksi (Anggota)
     public void cetakStrukPeminjaman(String idPinjam) {
         try (Connection conn = Koneksi.configDB()) {
             InputStream reportStream = getClass().getResourceAsStream("/report/struk_peminjaman.jrxml");

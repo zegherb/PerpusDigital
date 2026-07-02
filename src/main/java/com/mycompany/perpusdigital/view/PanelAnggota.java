@@ -31,18 +31,18 @@ public class PanelAnggota extends JPanel {
         tabelAnggota.setRowHeight(25); 
         add(new JScrollPane(tabelAnggota), BorderLayout.CENTER);
 
-        // --- DERETAN TOMBOL ---
+        
         JPanel panelTombol = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton btnPromosi = new JButton("Promosikan Jadi Admin");
         JButton btnHapus = new JButton("Hapus Anggota");
         JButton btnRefresh = new JButton("Muat Ulang Data");
 
-        // Warna Teal/Emerald Green untuk tombol Promosi
+        
         btnPromosi.setBackground(new Color(42, 157, 143));
         btnPromosi.setForeground(Color.WHITE);
         btnPromosi.setFont(new Font("Segoe UI", Font.BOLD, 12));
 
-        // Warna Merah untuk tombol Hapus
+        
         btnHapus.setBackground(new Color(229, 56, 59));
         btnHapus.setForeground(Color.WHITE);
         btnHapus.setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -52,7 +52,7 @@ public class PanelAnggota extends JPanel {
         panelTombol.add(btnRefresh);
         add(panelTombol, BorderLayout.SOUTH);
 
-        // --- EVENT LISTENER TOMBOL PROMOSI ---
+        
         btnPromosi.addActionListener(e -> {
             int baris = tabelAnggota.getSelectedRow();
             if (baris < 0) {
@@ -63,12 +63,12 @@ public class PanelAnggota extends JPanel {
             String idUser = tableModel.getValueAt(baris, 0).toString();
             String nama = tableModel.getValueAt(baris, 2).toString();
 
-            // Munculkan kotak input teks untuk mengetik jabatan
+           
             String inputJabatan = JOptionPane.showInputDialog(this, 
                 "Masukkan Jabatan baru untuk '" + nama + "':\n(Contoh: Petugas Sirkulasi, Pustakawan, Staf IT)", 
                 "Promosi Anggota ke Admin", JOptionPane.QUESTION_MESSAGE);
 
-            // Cek apakah user mengetik sesuatu (tidak pencet cancel)
+            
             if (inputJabatan != null && !inputJabatan.trim().isEmpty()) {
                 String jabatanBersih = inputJabatan.trim();
                 
@@ -79,7 +79,7 @@ public class PanelAnggota extends JPanel {
                 if (konfirm == JOptionPane.YES_OPTION) {
                     if (anggotaDAO.jadikanAdmin(idUser, jabatanBersih)) {
                         JOptionPane.showMessageDialog(this, "SELAMAT! '" + nama + "' resmi menjadi Admin (" + jabatanBersih + ").");
-                        loadDataAnggota(); // Refresh tabel
+                        loadDataAnggota(); 
                     } else {
                         JOptionPane.showMessageDialog(this, "Gagal melakukan promosi jabatan!", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -87,7 +87,7 @@ public class PanelAnggota extends JPanel {
             }
         });
 
-        // Event Hapus & Refresh
+        
         btnHapus.addActionListener(e -> hapusAnggotaTerpilih());
         btnRefresh.addActionListener(e -> loadDataAnggota());
 

@@ -8,7 +8,7 @@ public class Admin extends User {
         this.jabatan = jabatan;
     }
 
-    // --- GETTER KHUSUS ADMIN ---
+    
     public String getJabatan() { return jabatan; }
 
     @Override

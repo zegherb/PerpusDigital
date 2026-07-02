@@ -15,7 +15,7 @@ public abstract class User {
         this.tipeUser = tipeUser;
     }
 
-    // --- GETTER LENGKAP ---
+    
     public String getIdUser() { return idUser; }
     public String getNama() { return nama; }
     public String getUsername() { return username; }

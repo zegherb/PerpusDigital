@@ -5,9 +5,9 @@ import java.sql.Date;
 public class Peminjaman {
     private String idPinjam;
     private String idUserAnggota;
-    private String namaAnggota; // Tambahan untuk UI
+    private String namaAnggota; 
     private String idBuku;
-    private String judulBuku;   // Tambahan untuk UI
+    private String judulBuku;   
     private Date tanggalPinjam;
     private Date tanggalKembali;
     private String statusPinjam;

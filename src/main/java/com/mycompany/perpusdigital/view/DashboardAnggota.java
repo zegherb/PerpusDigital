@@ -19,7 +19,6 @@ public class DashboardAnggota extends JFrame {
     private CardLayout cardLayout;
     private JPanel contentPanel;
     
-    // Model Tabel
     private JTable tabelKatalog;
     private DefaultTableModel modelKatalog;
     private JTable tabelRakSaya;
@@ -42,10 +41,9 @@ public class DashboardAnggota extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // --- 1. SIDEBAR (Kiri) ---
         JPanel sidebar = new JPanel();
         sidebar.setPreferredSize(new Dimension(220, 0));
-        sidebar.setBackground(new Color(30, 41, 59)); // Slate Dark
+        sidebar.setBackground(new Color(30, 41, 59)); 
         sidebar.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -75,7 +73,6 @@ public class DashboardAnggota extends JFrame {
         gbc.gridy = 5; gbc.weighty = 1.0; sidebar.add(new JLabel(""), gbc); 
         gbc.gridy = 6; gbc.weighty = 0; sidebar.add(btnLogout, gbc);
 
-        // --- 2. CONTENT AREA (Kanan) ---
         cardLayout = new CardLayout();
         contentPanel = new JPanel(cardLayout);
         contentPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
@@ -83,7 +80,6 @@ public class DashboardAnggota extends JFrame {
         contentPanel.add(buatPanelKatalog(), "KATALOG");
         contentPanel.add(buatPanelRakSaya(), "RAK_SAYA");
 
-        // --- 3. EVENT LISTENERS ---
         btnKatalog.addActionListener(e -> cardLayout.show(contentPanel, "KATALOG"));
         btnRakSaya.addActionListener(e -> cardLayout.show(contentPanel, "RAK_SAYA"));
         btnLogout.addActionListener(e -> {
@@ -94,7 +90,6 @@ public class DashboardAnggota extends JFrame {
         add(sidebar, BorderLayout.WEST);
         add(contentPanel, BorderLayout.CENTER);
         
-        // Pemicu tarik data pertama saat aplikasi terbuka
         muatUlangRakSaya();
     }
 
@@ -105,7 +100,6 @@ public class DashboardAnggota extends JFrame {
         return b;
     }
 
-    // HALAMAN 1: Katalog Buku (Ditambah kolom Status & Satpam Cegat)
     private JPanel buatPanelKatalog() {
         JPanel p = new JPanel(new BorderLayout(0, 10));
         Perpustakaan perpusObj = new Perpustakaan();
@@ -150,7 +144,6 @@ public class DashboardAnggota extends JFrame {
         });
         txtCari.addActionListener(btnCari.getActionListeners()[0]);
 
-        // AKSI PINJAM BUKU + SINKRONISASI GAIB
         btnPinjam.addActionListener(e -> {
             int row = tabelKatalog.getSelectedRow();
             if (row < 0) {
@@ -172,8 +165,8 @@ public class DashboardAnggota extends JFrame {
             if (JOptionPane.showConfirmDialog(this, "Pinjam digital buku '" + judulBuku + "'? (Maks 7 Hari)", "Pinjam", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 if (peminjamanDAO.catatPeminjaman(anggotaLogin.getIdUser(), idBuku)) {
                     JOptionPane.showMessageDialog(this, "BERHASIL! Buku dipindahkan ke Rak Anda.");
-                    btnCari.doClick();  // 1. Ubah status di katalog lgsg jadi 'Dipinjam'
-                    muatUlangRakSaya(); // 2. Suntikkan datanya ke tabel Rak Saya di detik yg sama!
+                    btnCari.doClick();  
+                    muatUlangRakSaya(); 
                 }
             }
         });
@@ -183,7 +176,6 @@ public class DashboardAnggota extends JFrame {
         return p;
     }
 
-    // HALAMAN 2: Rak Saya (Dengan Tombol Refresh Orange + Cetak PDF)
     private JPanel buatPanelRakSaya() {
         JPanel p = new JPanel(new BorderLayout(0, 10));
         JLabel judul = new JLabel("Rak Buku Digital Saya");
@@ -207,7 +199,7 @@ public class DashboardAnggota extends JFrame {
         
 
         JButton btnCetakStruk = new JButton("Cetak Bukti Pinjam (PDF)");
-        btnCetakStruk.setBackground(new Color(42, 157, 143)); // Teal
+        btnCetakStruk.setBackground(new Color(42, 157, 143)); 
         btnCetakStruk.setForeground(Color.WHITE);
         btnCetakStruk.setFont(new Font("Segoe UI", Font.BOLD, 12));
 

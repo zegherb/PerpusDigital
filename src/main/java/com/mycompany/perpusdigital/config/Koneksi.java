@@ -15,16 +15,16 @@ public class Koneksi {
 
     public static Connection configDB() {
         try {
-            // // URL Database, ditambahkan parameter timezone agar sinkron dengan MySQL 8
-            // String url = "jdbc:mysql://localhost:3306/perpustakaan_db?serverTimezone=Asia/Makassar"; 
-            // String user = "root"; // Sesuaikan jika user MySQL lu berbeda
-            // String pass = ""; // Isi password jika root MySQL lu menggunakan password
+            
+            String url = "jdbc:mysql://localhost:3306/perpustakaan_db?serverTimezone=Asia/Makassar"; 
+            String user = "root"; 
+            String pass = ""; 
 
-            String url = "jdbc:mysql://ui7pyx3cjuxf8cfm:h43GgpMfuPDJWLYut4xQ@bc9q9qfrymvvc7ewlani-mysql.services.clever-cloud.com:3306/bc9q9qfrymvvc7ewlani"; 
-            String user = "ui7pyx3cjuxf8cfm"; // Sesuaikan jika user MySQL lu berbeda
-            String pass = "h43GgpMfuPDJWLYut4xQ"; // Isi password jika root MySQL lu menggunakan password
 
-            // Memanggil Driver MySQL
+            // String url = "jdbc:mysql://ui7pyx3cjuxf8cfm:h43GgpMfuPDJWLYut4xQ@bc9q9qfrymvvc7ewlani-mysql.services.clever-cloud.com:3306/bc9q9qfrymvvc7ewlani"; 
+            // String user = "ui7pyx3cjuxf8cfm"; 
+            // String pass = "h43GgpMfuPDJWLYut4xQ"; 
+
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             
             mysqlconfig = DriverManager.getConnection(url, user, pass);
@@ -35,7 +35,7 @@ public class Koneksi {
         return mysqlconfig;
     }
 
-    // Method main ini kita buat sementara murni untuk ngetes koneksi
+    
     public static void main(String[] args) {
         configDB();
     }
